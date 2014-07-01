@@ -1533,8 +1533,8 @@ public class ContactEditorUI extends javax.swing.JFrame {
             }
            if(((String)Algo1_ComboBox.getSelectedItem()).equals("Bland simplex on dual"))
             {
-                path="Simplex";
-                path1="Simplex";
+                path = "Simplex_Bland";
+                path1 = "Simplex_Bland";
                 gui_con.connector(mdp,"Bland simplex on dual");
 
             }
@@ -1577,8 +1577,8 @@ public class ContactEditorUI extends javax.swing.JFrame {
             }
            if(((String)Algo2_Combobox.getSelectedItem()).equals("Bland simplex on dual"))
             {
-                path="Simplex";
-                path2="Simplex";
+                path = "Simplex_Bland";
+                path2 = "Simplex_Bland";
                 gui_con.connector(mdp,"Bland simplex on dual");
 
             }
@@ -1656,7 +1656,7 @@ public class ContactEditorUI extends javax.swing.JFrame {
             }
            if(((String)Algo1_ComboBox.getSelectedItem()).equals("Bland simplex on dual"))
             {
-                path="Simplex";
+                path = "Simplex_Bland";
                 gui_con.connector(mdp,"Bland simplex on dual");
 
             }
@@ -1732,7 +1732,7 @@ public class ContactEditorUI extends javax.swing.JFrame {
 
     private void refresh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refresh1ActionPerformed
         // TODO add your handling code here:
-         image7.setIcon(new javax.swing.ImageIcon("compare Algorithm\\compareval.jpeg"));
+         //image7.setIcon(new javax.swing.ImageIcon("compare Algorithm\\compareval.jpeg"));
         comparecount=0;
         this.addCompareImage(path1,path2);
         comparecount++;

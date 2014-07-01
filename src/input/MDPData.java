@@ -329,6 +329,7 @@ public class MDPData
         {
             if(purePolicy[i] >= 0.99999)
             {
+                
                 ret[stateCounter] = transitionMatrix[i];
                 stateCounter++;
             }

@@ -44,75 +44,86 @@ public class GUI_Algo_Connector {
         if(algo.equals("simplex"))
         {
             System.out.println("IN GUI CONNECTOR");
-            new Simplex_Algorithm(mdp).runSimplexAlgorithm(0);
+            MDPData simplex_mdp = new MDPData(mdp);
+            new Simplex_Algorithm(simplex_mdp).runSimplexAlgorithm(0);
         
             path = "Simplex";
         
-            Gnu_Script_Writer gnuImager = new Gnu_Script_Writer(mdp.getNoOfStates(), mdp.getNumOfActionsOnEachState(), path);
+            Gnu_Script_Writer gnuImager = new Gnu_Script_Writer(simplex_mdp.getNoOfStates(), simplex_mdp.getNumOfActionsOnEachState(), path);
 
         }
         
         else if(algo.equals("primal affine"))
         {
-            new PrimalAffine_Algorithm(mdp).runPrimalAffine();
+            MDPData primal_mdp = new MDPData(mdp);
+            new PrimalAffine_Algorithm(primal_mdp).runPrimalAffine();
         
             path = "Primal_Affine";
         
-            new Gnu_Script_Writer(mdp.getNoOfStates(), mdp.getNumOfActionsOnEachState(), path);
+            new Gnu_Script_Writer(primal_mdp.getNoOfStates(), primal_mdp.getNumOfActionsOnEachState(), path);
 
         }
         
         else if(algo.equals("cute algo"))
         {
             path = "MixStrategy";
+            MDPData cute_mdp = new MDPData(mdp);        
+            new MixStrategy_Algorithm(cute_mdp).runMixStrategy();
         
-            new MixStrategy_Algorithm(mdp).runMixStrategy();
-        
-            new Gnu_Script_Writer(mdp.getNoOfStates(), mdp.getNumOfActionsOnEachState(), path);
+            new Gnu_Script_Writer(cute_mdp.getNoOfStates(), cute_mdp.getNumOfActionsOnEachState(), path);
 
         }
         
         else if(algo.equals("value iteration"))
         {
             path = "ValueIteration";
-            new ValueIterationImpl(mdp).run();
+            MDPData value_mdp = new MDPData(mdp);                    
+            new ValueIterationImpl(value_mdp).run();
 
         }
         
         else if(algo.equals("policy iteration")){
+            
             path = "PolicyIteration";
-            new PolicyIterationImpl(mdp).run();
+            MDPData policy_mdp = new MDPData(mdp);                                
+            new PolicyIterationImpl(policy_mdp).run();
 
         }
         else if(algo.equals("Modified policy iteration")){
             path = "ModifiedPolicyIteration";
-            new ModifiedPolicyIterationImpl(mdp).run();
+            MDPData mod_policy_mdp = new MDPData(mdp);                                            
+            new ModifiedPolicyIterationImpl(mod_policy_mdp).run();
 
         }
         else if(algo.equals("Bland simplex on dual")){
-            path = "Simplex";
-            new Simplex_Algorithm(mdp).runSimplexAlgorithm(1);
-            new Gnu_Script_Writer(mdp.getNoOfStates(), mdp.getNumOfActionsOnEachState(), path);
+            path = "Simplex_Bland";
+            MDPData bland_simplex_mdp = new MDPData(mdp);                                                        
+            new Simplex_Algorithm(bland_simplex_mdp).runSimplexAlgorithm(1);
+            new Gnu_Script_Writer(bland_simplex_mdp.getNoOfStates(), bland_simplex_mdp.getNumOfActionsOnEachState(), path);
 
         }
         else if(algo.equals("Single pivot policy iteration")){
             path = "SinglePivotPolicyIteration";
-            new SinglePivotPolicyIterationImpl(mdp).run();
+            MDPData single_pivot_policy_mdp = new MDPData(mdp);                                                                    
+            new SinglePivotPolicyIterationImpl(single_pivot_policy_mdp).run();
 
         }
         else if(algo.equals("Single pivot modified policy iteration")){
             path = "SinglePivotModifiedPolicyIteration";
-            new SinglePivotModifiedPolicyIterationImpl(mdp).run();
+            MDPData single_pivot_modified_policy_mdp = new MDPData(mdp);                                                                                
+            new SinglePivotModifiedPolicyIterationImpl(single_pivot_modified_policy_mdp).run();
 
         }
         else if(algo.equals("Least index policy iteration")){
             path = "LastIndexPivotPolicyIteration";
-            new LeastIndexPivotPolicyIterationImpl(mdp).run();
+            MDPData least_index_policy_mdp = new MDPData(mdp);                                                                                            
+            new LeastIndexPivotPolicyIterationImpl(least_index_policy_mdp).run();
 
         }
         else if(algo.equals("Least index modified policy iteration")){
             path = "LastIndexPivotModifiedPolicyIteration";
-            new LeastIndexPivotModifiedPolicyIterationImpl(mdp).run();
+            MDPData least_index_modified_policy_mdp = new MDPData(mdp);                                                                                                        
+            new LeastIndexPivotModifiedPolicyIterationImpl(least_index_modified_policy_mdp).run();
 
         }
 

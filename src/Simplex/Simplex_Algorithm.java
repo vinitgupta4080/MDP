@@ -23,7 +23,9 @@ public class Simplex_Algorithm {
     
     private SeedPoint seed;
     
-    private PrintDataFile pdf = new PrintDataFile("Simplex");
+    private String path="Simplex";
+    
+    private PrintDataFile pdf=null;
 
     public Simplex_Algorithm(MDPData mdpdata)
     {
@@ -156,7 +158,7 @@ public class Simplex_Algorithm {
         double[] ret = new double[mdp.getNoOfStates()];
         Matrix A_B = new Matrix(calculate_A_AccordingToB());
         Matrix b = Utility.vectorToMatrix(Utility.unitVector(A_B.getRowDimension()));
-        Matrix temp = A_B.inverse().times(b);
+        Matrix temp = (A_B.transpose()).inverse().times(b);
         for(int i=0;i<mdp.getNoOfStates();i++){
             ret[i]=temp.get(i, 0);
         }
@@ -241,10 +243,13 @@ public class Simplex_Algorithm {
             mdp.displayMDP();
             if(mode==0)
             {
+                pdf = new PrintDataFile(path);                                
                 simplexAlgorithm(0);
             }
             else
             {
+                this.path = "Simplex_Bland";
+                pdf = new PrintDataFile(path);
                 simplexAlgorithm(1);
             }
         }
@@ -254,11 +259,15 @@ public class Simplex_Algorithm {
             mdp.setPolicy(policy);
             if(mode==0)
             {
+                pdf = new PrintDataFile(path);                
                 simplexAlgorithm(0);
             }
             else
             {
+                this.path = "Simplex_Bland";
+                pdf = new PrintDataFile(path);                
                 simplexAlgorithm(1);
+                
             }
             
         }

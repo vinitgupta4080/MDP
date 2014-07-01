@@ -36,6 +36,7 @@ public class FileMerger {
         BufferedReader reader1=null, reader2=null;
         String content="";
         File output =null;
+        String prevline1="",prevline2="";
         try {
             reader1 = new BufferedReader(new InputStreamReader(new FileInputStream(file1name+"\\ValueSum.dat")));
             reader2 = new BufferedReader(new InputStreamReader(new FileInputStream(file2name+"\\ValueSum.dat")));
@@ -58,18 +59,20 @@ public class FileMerger {
             while ((((line1 = reader1.readLine()) != null) | ((line2 = reader2.readLine()) != null))&&count<15)
             {
                 if(line1 == null ){
-                    content+="  ";
+                    content+=prevline1+" ";
                     count++;
                 }
                 else{
                     content+=line1+" ";
+                    prevline1 =  line1;
                 }
                 if(line2 ==  null){
-                    content+=" "+"\n";
+                    content+=prevline2+"\n";
                     count++;
                 }
                 else{
                     content+=line2;
+                    prevline2 =line2;
                     content+="\n";
                 }
             }

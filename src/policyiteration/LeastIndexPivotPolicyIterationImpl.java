@@ -121,18 +121,18 @@ public class LeastIndexPivotPolicyIterationImpl
     
     public void calculateAndSetPolicy()
     {
-        double maxValArr[] = new double[mdpData.getNoOfStates()];
-        int maxActionIndexArr[] = new int[mdpData.getNoOfStates()];
         double preMaxValArr[] = mdpData.getValue();
         //double diffArr[] = new double[mdpData.getNoOfStates()];
         //int preMaxActionIndexArr[] = new int[mdpData.getNoOfStates()];
-        double tempActionVal, maxStateVal, diff=0.0;
-        int maxActionIndex, leastIndex = -1;
+        double tempActionVal;
+        int actionIndex=-1, leastIndex = -1;
         ArrayList<Double> transitionList;
+        
+        double cbar = 0;
+        
         for(int i=0; i<mdpData.getNoOfStates(); i++)
         {
-            maxStateVal = 0.0; //mdpData.getStateList().get(i).getValue();
-            maxActionIndex = -1;
+            actionIndex = -1;
             tempActionVal = 0.0;
             for(int j=0; j<mdpData.getStateList().get(i).getNoOfActions(); j++)
             {
@@ -142,34 +142,30 @@ public class LeastIndexPivotPolicyIterationImpl
                 {
                     tempActionVal = tempActionVal + mdpData.getGamma() * transitionList.get(stateCounter) * mdpData.getStateList().get(stateCounter).getValue();                    
                 }
-                if(tempActionVal > maxStateVal)
+                
+                cbar = tempActionVal - preMaxValArr[i];
+                
+                if(cbar > 0.0001)
                 {
-                    maxStateVal = tempActionVal;
-                    maxActionIndex = j;
+                    if(mdpData.getStateList().get(i).getActionList().get(j).getProbDist() != 1.0)
+                    {
+                        leastIndex = i;
+                        actionIndex = j;
+                        break;
+                    }
                 }
             }
-            maxValArr[i] = maxStateVal;
-            maxActionIndexArr[i] = maxActionIndex;
-        }
-        
-        for(int i=0; i<maxValArr.length; i++)
-        {
-            diff = maxValArr[i] - preMaxValArr[i];
-            if(diff > 0.0)
+            if(leastIndex != -1)
             {
-                if(mdpData.getStateList().get(i).getActionList().get(maxActionIndexArr[i]).getProbDist() != 1.0)
-                {
-                    leastIndex = i;       
-                    break;
-                }
+                break;
             }
         }
         
-        if(leastIndex != -1)
+        if(leastIndex != -1 && actionIndex != -1)
         {
             for(int k=0; k<mdpData.getStateList().get(leastIndex).getNoOfActions(); k++)
             {
-                if(k==maxActionIndexArr[leastIndex])
+                if(k==actionIndex)
                 {
                     mdpData.getStateList().get(leastIndex).getActionList().get(k).setProbDist(1.0);
                 }
@@ -182,6 +178,7 @@ public class LeastIndexPivotPolicyIterationImpl
         }
         else
         {
+            System.out.println("LeastIndexPivotPolicyIteration :: calculateAndSetPolicy() : ACTION-INDEX "+actionIndex+" , STATE-INDEX "+leastIndex);
             //TODO
             //POLICY FOUND!! NO NEED FOR FURTHER ITERATIONS.
         }
@@ -201,11 +198,11 @@ public class LeastIndexPivotPolicyIterationImpl
         {
             prevPolicy = mdpData.getPolicy();
             calculateAndSetValues();
-            System.out.println("PolicyIteration :: run() : displaying mdp values");
-            mdpData.displayPolicy();
-            mdpData.displayRewards();
-            mdpData.displayValue();
-            System.out.println("");
+            //System.out.println("PolicyIteration :: run() : displaying mdp values");
+            //mdpData.displayPolicy();
+            //mdpData.displayRewards();
+            //mdpData.displayValue();
+            //System.out.println("");
             pdf.printData(mdpData);
             calculateAndSetPolicy();
         }
